@@ -1,6 +1,4 @@
-
-gommap
-======
+# gommap
 
 This is a git mirror of [launchpad.net/gommap][bzr_source]. The `master` branch
 includes [this patch][osx_patch], which adds support for darwin64 (MacOS X), as
@@ -8,14 +6,13 @@ well as [Windows support by @matt-farmer][windows_patch].
 
 [bzr_source]: http://launchpad.net/gommap
 [osx_patch]: https://code.launchpad.net/~karl-excors/gommap/gommap-darwin64/+merge/129364
-[windows_patch]: https://github.com/tysonmote/gommap/pull/3
+[windows_patch]: https://github.com/fd1az/gommap/pull/3
 
 [Read more](http://labix.org/gommap)
 
-[API documentation](https://pkg.go.dev/github.com/tysonmote/gommap)
+[API documentation](https://pkg.go.dev/github.com/fd1az/gommap)
 
-Notes on Windows Support by @matt-farmer
-========================================
+# Notes on Windows Support by @matt-farmer
 
 Gommap is a dependency within the [liftbridge](https://github.com/liftbridge-io/liftbridge) streaming engine which we are using, and we need to be able to run the streaming server on windows.
 
@@ -28,11 +25,12 @@ We created this fork really because we're prepared to support the implementation
 The windows version is designed to require no changes to existing code; certainly this is the case for our liftbridge requirement, the liftbridge server now builds and runs fine on windows, and it's been subjected to high volume tests that would force the flushing of the map without incident.
 
 ### Limitations
+
 1. We have only tested this on 64-bit Windows
 1. We have not been able to implement the (mmap)Advise() or (mmap)IsResident() functions - later versions of windows may have apis that can help to support these (from the documentation we've been able to find), but go can only distinguish os and architecture and those 'advanced' features are not generically available to 'windows'. Please raise an issue if this is a show-stopper.
 
-
 ### Prior Art
+
 Here’s a list of the alternative go mem-map packages that we looked at for help and/or borrowed from directly, and which anyone else may find helpful if you need cross-platform memory-mapping in go:
 
 https://github.com/edsrzf/mmap-go
@@ -42,7 +40,7 @@ https://github.com/golang/exp/tree/master/mmap
 Package from the golang devs for mmap. Not immediately useful for our requirement as it only offers a reader interface, but does have nice use of the syscall package in the windows golang file that might be useful if we end up having to create our own library completely from scratch.
 
 https://github.com/justmao945/tama/tree/master/mmap
-This one uses a full go File paradigm rather than a byte array. 
+This one uses a full go File paradigm rather than a byte array.
 
 https://github.com/influxdata/platform/tree/master/pkg/mmap
 This one is used by influxdb, so we know it works on multiple platforms (we also use influxdb as part of the same project). Difference here is that the API is much simpler, just open - returns a byte array, and then close!
@@ -52,5 +50,3 @@ An interesting one that is actively developed. Uses a mixture of file/byte array
 
 https://github.com/AlexStocks/goext/tree/master/syscall
 Another active repo, with a mmap for unix and windows, offers the simple interface for byte array which should be compatible with the simple calls used by liftbridge.
-
-

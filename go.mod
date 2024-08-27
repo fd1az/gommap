@@ -1,4 +1,4 @@
-module github.com/tysonmote/gommap
+module github.com/fd1az/gommap
 
 go 1.17
 
